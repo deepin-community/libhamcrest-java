@@ -1,0 +1,2 @@
+hamcrest/build/debian/hamcrest.pom --java-lib --artifact=hamcrest/build/libs/hamcrest-*.jar --relocate=org.hamcrest:hamcrest-core,org.hamcrest:hamcrest-all,org.hamcrest:hamcrest-library
+hamcrest-integration/build/debian/hamcrest-integration.pom --java-lib --artifact=hamcrest-integration/build/libs/hamcrest-integration-*.jar

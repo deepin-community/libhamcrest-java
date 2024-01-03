@@ -1,0 +1,3 @@
+
+jmock jmock * s/.*/1.x/ * *
+junit junit * s/.*/4.x/ * *

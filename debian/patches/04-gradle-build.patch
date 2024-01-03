@@ -1,0 +1,70 @@
+Description: Changes the build to work with the version of Gradle in Debian
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: not-needed
+--- a/settings.gradle
++++ b/settings.gradle
+@@ -1,4 +1,3 @@
+-enableFeaturePreview('STABLE_PUBLISHING')
+ 
+ include 'hamcrest',
+         'hamcrest-core',
+--- a/build.gradle
++++ b/build.gradle
+@@ -57,6 +57,7 @@
+     }
+ }
+ 
++/*
+ def pomConfigurationFor(String pomName, String pomDescription) {
+     return {
+         name = pomName
+@@ -91,6 +92,7 @@
+         }
+     }
+ }
++*/
+ 
+ def publishToOssrh = project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')
+ 
+@@ -102,9 +104,6 @@
+             artifactId hamcrestProject.name
+             artifact hamcrestProject.sourcesJar
+             artifact hamcrestProject.javadocJar
+-            pom pomConfigurationFor(
+-                    'Hamcrest',
+-                    'Core API and libraries of hamcrest matcher framework.')
+         }
+ 
+         def hamcrestCoreProject = project(':hamcrest-core')
+@@ -113,9 +112,6 @@
+             artifactId hamcrestCoreProject.name
+             artifact hamcrestCoreProject.sourcesJar
+             artifact hamcrestCoreProject.javadocJar
+-            pom pomConfigurationFor(
+-                    'Hamcrest Core',
+-                    'Core Hamcrest API - deprecated, please use "hamcrest" instead')
+         }
+ 
+         def hamcrestLibraryProject = project(':hamcrest-library')
+@@ -124,9 +120,6 @@
+             artifactId hamcrestLibraryProject.name
+             artifact hamcrestLibraryProject.sourcesJar
+             artifact hamcrestLibraryProject.javadocJar
+-            pom pomConfigurationFor(
+-                    'Hamcrest Library',
+-                    'A library of Hamcrest matchers - deprecated, please use "hamcrest" instead')
+         }
+     }
+     repositories {
+@@ -144,9 +137,11 @@
+     }
+ }
+ 
++/*
+ signing {
+     required { publishToOssrh }
+     sign publishing.publications.hamcrest
+     sign publishing.publications.hamcrestCore
+     sign publishing.publications.hamcrestLibrary
+ }
++*/
