@@ -1,0 +1,116 @@
+Description: Fixes the type inference errors when building with the source/target level set to Java 8
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: not-needed
+--- a/hamcrest/src/main/java/org/hamcrest/core/AllOf.java
++++ b/hamcrest/src/main/java/org/hamcrest/core/AllOf.java
+@@ -46,7 +46,7 @@
+      * <pre>assertThat("myValue", allOf(startsWith("my"), containsString("Val")))</pre>
+      */
+     public static <T> Matcher<T> allOf(Iterable<Matcher<? super T>> matchers) {
+-        return new AllOf<>(matchers);
++        return new AllOf<>((java.util.List) matchers);
+     }
+ 
+     /**
+@@ -56,6 +56,6 @@
+      */
+     @SafeVarargs
+     public static <T> Matcher<T> allOf(Matcher<? super T>... matchers) {
+-        return allOf(Arrays.asList(matchers));
++        return allOf((java.util.List) Arrays.asList(matchers));
+     }
+ }
+--- a/hamcrest/src/main/java/org/hamcrest/core/AnyOf.java
++++ b/hamcrest/src/main/java/org/hamcrest/core/AnyOf.java
+@@ -36,7 +36,7 @@
+      * <pre>assertThat("myValue", anyOf(startsWith("foo"), containsString("Val")))</pre>
+      */
+     public static <T> AnyOf<T> anyOf(Iterable<Matcher<? super T>> matchers) {
+-        return new AnyOf<>(matchers);
++        return new AnyOf<>((java.util.List) matchers);
+     }
+     
+     /**
+@@ -46,6 +46,6 @@
+      */
+     @SafeVarargs
+     public static <T> AnyOf<T> anyOf(Matcher<? super T>... matchers) {
+-        return anyOf(Arrays.asList(matchers));
++        return anyOf((java.util.List) Arrays.asList(matchers));
+     }
+ }
+--- a/hamcrest/src/main/java/org/hamcrest/collection/ArrayMatching.java
++++ b/hamcrest/src/main/java/org/hamcrest/collection/ArrayMatching.java
+@@ -67,7 +67,7 @@
+    */
+   @SafeVarargs
+   public static <E> Matcher<E[]> arrayContainingInAnyOrder(Matcher<? super E>... itemMatchers) {
+-      return arrayContainingInAnyOrder(asList(itemMatchers));
++      return arrayContainingInAnyOrder((List) asList(itemMatchers));
+   }
+ 
+   /**
+--- a/hamcrest/src/main/java/org/hamcrest/collection/IsIterableContainingInAnyOrder.java
++++ b/hamcrest/src/main/java/org/hamcrest/collection/IsIterableContainingInAnyOrder.java
+@@ -98,7 +98,7 @@
+      */
+     @SafeVarargs
+     public static <T> Matcher<Iterable<? extends T>> containsInAnyOrder(Matcher<? super T>... itemMatchers) {
+-        return containsInAnyOrder(Arrays.asList(itemMatchers));
++        return containsInAnyOrder((List) Arrays.asList(itemMatchers));
+     }
+ 
+     /**
+--- a/hamcrest/src/main/java/org/hamcrest/collection/IsArrayContainingInOrder.java
++++ b/hamcrest/src/main/java/org/hamcrest/collection/IsArrayContainingInOrder.java
+@@ -73,7 +73,7 @@
+      *     the matchers that must be satisfied by the items in the examined array
+      */
+     public static <E> Matcher<E[]> arrayContaining(Matcher<? super E>... itemMatchers) {
+-        return arrayContaining(asList(itemMatchers));
++        return arrayContaining((List) asList(itemMatchers));
+     }
+ 
+     /**
+--- a/hamcrest/src/main/java/org/hamcrest/core/CombinableMatcher.java
++++ b/hamcrest/src/main/java/org/hamcrest/core/CombinableMatcher.java
+@@ -57,7 +57,7 @@
+         this.first = matcher;
+     }
+     public CombinableMatcher<X> and(Matcher<? super X> other) {
+-      return new CombinableMatcher<>(first).and(other);
++      return new CombinableMatcher<>(first).and((Matcher) other);
+     }
+   }
+ 
+@@ -76,7 +76,7 @@
+         this.first = matcher;
+     }
+     public CombinableMatcher<X> or(Matcher<? super X> other) {
+-      return new CombinableMatcher<>(first).or(other);
++      return new CombinableMatcher<>(first).or((Matcher) other);
+     }
+   }
+ }
+--- a/hamcrest/src/main/java/org/hamcrest/collection/IsIterableContainingInRelativeOrder.java
++++ b/hamcrest/src/main/java/org/hamcrest/collection/IsIterableContainingInRelativeOrder.java
+@@ -99,7 +99,7 @@
+      */
+     @SafeVarargs
+     public static <E> Matcher<Iterable<? extends E>> containsInRelativeOrder(Matcher<? super E>... itemMatchers) {
+-        return containsInRelativeOrder(asList(itemMatchers));
++        return containsInRelativeOrder((List) asList(itemMatchers));
+     }
+ 
+     /**
+--- a/hamcrest/src/main/java/org/hamcrest/collection/IsArrayContainingInAnyOrder.java
++++ b/hamcrest/src/main/java/org/hamcrest/collection/IsArrayContainingInAnyOrder.java
+@@ -59,7 +59,7 @@
+      *     a list of matchers, each of which must be satisfied by an entry in an examined array
+      */
+     public static <E> Matcher<E[]> arrayContainingInAnyOrder(Matcher<? super E>... itemMatchers) {
+-        return arrayContainingInAnyOrder(Arrays.asList(itemMatchers));
++        return arrayContainingInAnyOrder((List) Arrays.asList(itemMatchers));
+     }
+ 
+     /**
