@@ -1,3 +1,3 @@
-001-build.patch
-002-random-build-failure.patch
-003-reproducible-build.patch
+04-gradle-build.patch
+05-backward-compatibility.patch
+06-type-inference-fix.patch

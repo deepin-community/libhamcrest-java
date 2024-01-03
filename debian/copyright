@@ -1,5 +1,8 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Source: https://github.com/hamcrest/JavaHamcrest
+Files-Excluded: gradlew*
+                gradle/wrapper
+                docs/javadoc
 
 Files: *
 Copyright: 2000-2006, www.hamcrest.org
